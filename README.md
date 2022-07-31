@@ -1,5 +1,8 @@
 # mineget
-`mineget` is a wrapper for a number of Minecraft marketplaces to easily get aggregated resource statistics.
+[![npm](https://img.shields.io/npm/v/mineget)](https://www.npmjs.com/package/mineget)
+[![Discord](https://img.shields.io/discord/818135932103557162?color=7289da&logo=discord)](https://discord.gg/tVYhJfyDWG)
+
+`mineget` is a node.js wrapper for a number of Minecraft marketplace APIs to easily fetch aggregated resource statistics.
 
 ## Usage
 Example querying total downloads across multiple marketplaces.
@@ -8,9 +11,7 @@ const mineget = require('mineget');
 
 // Getting the total downloads of a resource
 // Methods accept an object containing mappings of marketplace IDs
-mineget.downloads({
-    'spigot': 97144, 'polymart': 1634,
-    'songoda': 758
+mineget.downloads({'spigot': 97144, 'polymart': 1634, 'songoda': 758
 }).then(result => {
     console.log(JSON.stringify(result));
 });
