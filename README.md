@@ -53,4 +53,4 @@ If you'd like to add support for more marketplaces and additional marketplace AP
 &dagger; *Modrinth IDs are alphanumeric, as opposed to spigot/polymart/songoda which have integer IDs.*
 
 ## License
-`mineget` is licensed under Apache-3.0.
+`mineget` is licensed under Apache-2.0.

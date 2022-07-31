@@ -20,7 +20,7 @@
     "plugin"
   ],
   "author": "William278 <will27528@gmail.com> (https://william278.net)",
-  "license": "Apache-3.0",
+  "license": "Apache-2.0",
   "dependencies": {
     "lodash": "^4.17.21",
     "node-fetch-cache": "^3.0.5"
