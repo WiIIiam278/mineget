@@ -4,6 +4,8 @@
 
 `mineget` is a node.js wrapper for a number of Minecraft marketplace APIs to easily fetch aggregated resource statistics.
 
+Queries are cached for 10 minutes to prevent excessive API calls.
+
 ## Usage
 Example querying total downloads across multiple marketplaces.
 ```js
@@ -44,16 +46,18 @@ This example will return a json object with following:
 ## Supported Marketplaces
 You can query the following marketplaces with this module. Note that not all marketplaces support returning data for every query.
 
-| id                  | url                                                                    | `name` | `downlaods` | `latest_version` | `rating` |
-|---------------------|------------------------------------------------------------------------|--------|-------------|------------------|----------|
-| `spigot`            | [Spigot](https://www.spigotmc.org/) (via [Spiget](https://spiget.org)) | ✅      | ✅           | ✅                | ✅        |
-| `polymart`          | [Polymart](https://polymart.com/)                                      | ✅      | ✅           | ✅                | ✅        |
-| `songoda`           | [Songoda Marketplace](https://songoda.com/)                            | ✅      | ✅           | ❌                | ✅        |
-| `modrinth` &dagger; | [Modrinth](https://www.modrinth.com/)                                  | ✅      | ✅           | ❌                | ❌        |
+| id         | url                                             | `name` | `downlaods` | `latest_version` | `rating` |
+|------------|-------------------------------------------------|--------|-------------|------------------|----------|
+| `spigot`   | [Spigot](https://www.spigotmc.org/) &dagger;    | ✅      | ✅           | ✅                | ✅        |
+| `polymart` | [Polymart](https://polymart.com/)               | ✅      | ✅           | ✅                | ✅        |
+| `songoda`  | [Songoda Marketplace](https://songoda.com/)     | ✅      | ✅           | ❌                | ✅        |
+| `modrinth` | [Modrinth](https://www.modrinth.com/) &ddagger; | ✅      | ✅           | ❌                | ❌        |
 
 If you'd like to add support for more marketplaces and additional marketplace API mappings, you can do so by submitting a pull request editing the `marketplaces.json`.
 
-&dagger; *Modrinth IDs are alphanumeric, as opposed to spigot/polymart/songoda which have integer IDs.*
+&dagger; *Queries are handled via [Spiget](https://spiget.org)*
+
+&ddagger; *Modrinth IDs are alphanumeric, as opposed to spigot/polymart/songoda which have integer IDs.*
 
 ## License
 `mineget` is licensed under Apache-2.0.
