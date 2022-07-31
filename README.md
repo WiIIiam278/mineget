@@ -46,7 +46,7 @@ This example will return a json object with following:
 ## Supported Marketplaces
 You can query the following marketplaces with this module. Note that not all marketplaces support returning data for every query.
 
-| id         | url                                             | `name` | `downlaods` | `latest_version` | `rating` |
+| id         | url                                             | `name` | `downloads` | `latest_version` | `rating` |
 |------------|-------------------------------------------------|--------|-------------|------------------|----------|
 | `spigot`   | [Spigot](https://www.spigotmc.org/) &dagger;    | ✅      | ✅           | ✅                | ✅        |
 | `polymart` | [Polymart](https://polymart.com/)               | ✅      | ✅           | ✅                | ✅        |
@@ -55,7 +55,7 @@ You can query the following marketplaces with this module. Note that not all mar
 
 If you'd like to add support for more marketplaces and additional marketplace API mappings, you can do so by submitting a pull request editing the `marketplaces.json`.
 
-&dagger; *Queries are handled via [Spiget](https://spiget.org)*
+&dagger; *Queries are handled via [Spiget](https://spiget.org).*
 
 &ddagger; *Modrinth IDs are alphanumeric, as opposed to spigot/polymart/songoda which have integer IDs.*
 
