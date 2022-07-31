@@ -1,9 +1,7 @@
-# Mineget
-
-Wrapper for a number of Minecraft marketplaces to easily get aggregated resource statistics.
+# mineget
+`mineget` is a wrapper for a number of Minecraft marketplaces to easily get aggregated resource statistics.
 
 ## Usage
-
 Example querying total downloads across multiple marketplaces.
 ```js
 const mineget = require('mineget');
@@ -37,7 +35,6 @@ This example will return a json object with following:
 ```
 
 ## Methods
-
 * `#downloads(ids)` - Get the total downloads of a resource across multiple marketplaces.
 * `#rating(ids)` - Get the average rating and number of ratings of a resource across multiple marketplaces.
 * `#latest_version(ids)` - Get the latest version name and published timestamp of a resource across multiple marketplaces.
@@ -56,4 +53,4 @@ If you'd like to add support for more marketplaces and additional marketplace AP
 &dagger; *Modrinth IDs are alphanumeric, as opposed to spigot/polymart/songoda which have integer IDs.*
 
 ## License
-mineget is licensed under Apache-3.0.
+`mineget` is licensed under Apache-3.0.
