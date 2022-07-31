@@ -1,0 +1,28 @@
+{
+  "name": "mineget",
+  "version": "1.0.0",
+  "description": "Get statistics about a Minecraft resource from multiple marketplaces",
+  "main": "mineget.js",
+  "files": [
+    "mineget.js",
+    "marketplaces.json"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "spigot",
+    "polymart",
+    "songoda",
+    "github",
+    "spiget",
+    "minecraft",
+    "plugin"
+  ],
+  "author": "William278 <will27528@gmail.com> (https://william278.net)",
+  "license": "Apache-3.0",
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "node-fetch-cache": "^3.0.5"
+  }
+}
