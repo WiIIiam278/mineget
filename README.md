@@ -42,12 +42,14 @@ This example will return a json object with following:
 * `#name(ids)` - Get the name of a resource as it is listed on different marketplaces.
 
 ## Supported Marketplaces
-You can query the following marketplaces with this module:
+You can query the following marketplaces with this module. Note that not all marketplaces support returning data for every query.
 
-- `spigot` - [Spigot](https://www.spigotmc.org/) via [Spiget](https://spiget.org/)
-- `polymart` - [Polymart](https://polymart.com/)
-- `songoda` - [Songoda](https://songoda.com/)
-- `modrinth` - [Modrinth](https://www.modrinth.com/) &dagger;
+| id                  | url                                                                   | `name` | `downlaods` | `latest_version` | `rating` |
+|---------------------|-----------------------------------------------------------------------|--------|-------------|------------------|----------|
+| `spigot`            | [Spigot](https://www.spigotmc.org/) (via [Spiget](https://spiget.org) | ✅      | ✅           | ✅                | ✅        |
+| `polymart`          | [Polymart](https://polymart.com/)                                     | ✅      | ✅           | ✅                | ✅        |
+| `songoda`           | [Songoda Marketplace](https://songoda.com/)                           | ✅      | ✅           | ❌                | ✅        |
+| `modrinth` &dagger; | [Modrinth](https://www.modrinth.com/)                                 | ✅      | ✅           | ❌                | ❌        |
 
 If you'd like to add support for more marketplaces and additional marketplace API mappings, you can do so by submitting a pull request editing the `marketplaces.json`.
 
