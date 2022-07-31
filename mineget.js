@@ -53,8 +53,6 @@ const query = (ids, endpoint) => {
             }).catch(fetchError => {
                 lodash.set(response, `status`, 'error');
                 lodash.set(response, `message`, `Error fetching: ${fetchError}`);
-                res(response);
-                break;
             });
         }
         res(response);
