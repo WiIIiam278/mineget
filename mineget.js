@@ -69,8 +69,8 @@ exports.downloads = function (ids) {
     return query(ids, endpointName).then(result => {
         let totalDownloads = 0;
         Object.entries(result[endpointName]).forEach(entry => {
-            let platformDownloads = parseInt(entry[1][endpointName]);
-            lodash.set(result, `endpoints.${entry[0]}.${endpointName}`, platformDownloads);
+            let platformDownloads = parseInt(entry[1]['downloads']);
+            lodash.set(result, `endpoints.${entry[0]}.downloads`, platformDownloads);
             totalDownloads += platformDownloads;
         });
         lodash.set(result, 'total_downloads', totalDownloads);
