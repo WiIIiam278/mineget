@@ -107,7 +107,7 @@ exports.rating = function (ids) {
             let platformRatingCount = parseInt(entry[1]['count']);
             lodash.set(result, `endpoints.${entry[0]}.average`, platformRatingAverage);
             lodash.set(result, `endpoints.${entry[0]}.count`, platformRatingCount);
-            totalRating += platformRatingAverage;
+            totalRating += (platformRatingAverage * platformRatingCount);
             totalRatingCount += platformRatingCount;
         });
         lodash.set(result, 'average_rating', totalRating / totalRatingCount);
