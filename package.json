@@ -1,6 +1,6 @@
 {
   "name": "mineget",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Get aggregated statistics about a Minecraft resource from multiple marketplaces",
   "main": "mineget.js",
   "files": [
