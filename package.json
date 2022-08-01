@@ -2,13 +2,24 @@
   "name": "mineget",
   "version": "1.0.8",
   "description": "Get aggregated statistics about a Minecraft resource from multiple marketplaces",
+  "author": "William278 <will27528@gmail.com> (https://william278.net)",
+  "homepage": "https://github.com/WiIIiam278/mineget",
+  "funding": "https://www.buymeacoffee.com/William278",
   "main": "mineget.js",
+  "bugs": {
+    "url": "https://github.com/WiIIiam278/mineget/issues",
+    "email": "will27528+mineget@gmail.com"
+  },
   "files": [
     "mineget.js",
     "marketplaces.json"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github:WiIIiam278/mineget"
   },
   "keywords": [
     "spigot",
@@ -19,7 +30,6 @@
     "minecraft",
     "plugin"
   ],
-  "author": "William278 <will27528@gmail.com> (https://william278.net)",
   "license": "Apache-2.0",
   "dependencies": {
     "lodash": "^4.17.21",
