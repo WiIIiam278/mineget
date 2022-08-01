@@ -23,7 +23,7 @@
           }
         },
         "rating": {
-          "endpoint": "resources/{id}/reviews",
+          "endpoint": "resources/{id}",
           "returns": {
             "average": "rating.average",
             "count": "rating.count"
