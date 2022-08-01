@@ -67,15 +67,15 @@ const query = (ids, endpoint) => {
 exports.downloads = function (ids) {
     let endpointName = 'downloads';
     return query(ids, endpointName).then(result => {
-        console.debug(`Got: ${result}`);
+        console.debug(`Got: ${JSON.stringify(result)}`);
         let totalDownloads = 0;
-        Object.entries(result[endpointName]).forEach(entry => {
-            console.debug(`Processing: ${entry}`);
+        Object.entries(result['endpoints']).forEach(entry => {
+            console.debug(`Processing: ${JSON.stringify(entry)}`);
             let platformDownloads = parseInt(entry[1]['downloads']);
             lodash.set(result, `endpoints.${entry[0]}.downloads`, platformDownloads);
             totalDownloads += platformDownloads;
         });
-        console.debug(`Result: ${result}`);
+        console.debug(`Result: ${JSON.stringify(result)}`);
         lodash.set(result, 'total_downloads', totalDownloads);
         return result;
     }, error => {
@@ -93,7 +93,7 @@ exports.rating = function (ids) {
     return query(ids, endpointName).then(result => {
         let totalRating = 0;
         let totalRatingCount = 0;
-        Object.entries(result[endpointName]).forEach(entry => {
+        Object.entries(result['endpoints']).forEach(entry => {
             let platformRatingAverage = parseFloat(entry[1]['average']);
             let platformRatingCount = parseInt(entry[1]['count']);
             lodash.set(result, `endpoints.${entry[0]}.average`, platformRatingAverage);
@@ -119,7 +119,7 @@ exports.latest_version = function (ids) {
     return query(ids, endpointName).then(result => {
         let latestVersionName = '';
         let latestVersionDate = 0;
-        Object.entries(result[endpointName]).forEach(entry => {
+        Object.entries(result['endpoints']).forEach(entry => {
             let platformLatestVersionName = entry[1]['version'];
             let platformLatestVersionDate = parseInt(entry[1]['published']);
             lodash.set(result, `endpoints.${entry[0]}.version`, platformLatestVersionName);
