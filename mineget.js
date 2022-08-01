@@ -67,12 +67,15 @@ const query = (ids, endpoint) => {
 exports.downloads = function (ids) {
     let endpointName = 'downloads';
     return query(ids, endpointName).then(result => {
+        console.debug(`Got: ${result}`);
         let totalDownloads = 0;
         Object.entries(result[endpointName]).forEach(entry => {
+            console.debug(`Processing: ${entry}`);
             let platformDownloads = parseInt(entry[1]['downloads']);
             lodash.set(result, `endpoints.${entry[0]}.downloads`, platformDownloads);
             totalDownloads += platformDownloads;
         });
+        console.debug(`Result: ${result}`);
         lodash.set(result, 'total_downloads', totalDownloads);
         return result;
     }, error => {
