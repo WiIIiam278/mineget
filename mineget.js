@@ -35,6 +35,18 @@ const query = (ids, endpoint) => {
                 res(response);
                 return;
             }
+            if (!marketplaces.platforms[platform].endpoints) {
+                lodash.set(response, `status`, 'error');
+                lodash.set(response, `message`, `No endpoints for ${platform}`);
+                res(response);
+                return;
+            }
+            if (!marketplaces.platforms[platform].endpoints[endpoint]) {
+                lodash.set(response, `status`, 'error');
+                lodash.set(response, `message`, `No endpoint ${endpoint} for ${platform}`);
+                res(response);
+                return;
+            }
 
             let url = marketplaces.platforms[platform].url;
             let path = marketplaces.platforms[platform].endpoints[endpoint].endpoint;
