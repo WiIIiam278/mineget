@@ -46,12 +46,12 @@ This example will return a json object with following:
 ## Supported Marketplaces
 You can query the following marketplaces with this module. Note that not all marketplaces support returning data for every query.
 
-| id         | url                                             | `name` | `downloads` | `latest_version` | `rating` |
-|------------|-------------------------------------------------|--------|-------------|------------------|----------|
-| `spigot`   | [Spigot](https://www.spigotmc.org/) &dagger;    | ✅      | ✅           | ✅                | ✅        |
-| `polymart` | [Polymart](https://polymart.com/)               | ✅      | ✅           | ✅                | ✅        |
-| `songoda`  | [Songoda Marketplace](https://songoda.com/)     | ✅      | ✅           | ❌                | ✅        |
-| `modrinth` | [Modrinth](https://www.modrinth.com/) &ddagger; | ✅      | ✅           | ❌                | ❌        |
+| id         | url                                             | `name` | `downloads` | `latest_version` | `rating` | `price` |
+|------------|-------------------------------------------------|--------|-------------|------------------|----------|---------|
+| `spigot`   | [Spigot](https://www.spigotmc.org/) &dagger;    | ✅      | ✅           | ✅                | ✅        | ✅       |
+| `polymart` | [Polymart](https://polymart.com/)               | ✅      | ✅           | ✅                | ✅        | ✅       |
+| `songoda`  | [Songoda Marketplace](https://songoda.com/)     | ✅      | ✅           | ❌                | ✅        | ✅       |
+| `modrinth` | [Modrinth](https://www.modrinth.com/) &ddagger; | ✅      | ✅           | ❌                | ❌        | ❌       |
 
 If you'd like to add support for more marketplaces and additional marketplace API mappings, you can do so by submitting a pull request editing the `marketplaces.json`.
 

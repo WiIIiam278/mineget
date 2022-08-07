@@ -72,6 +72,60 @@ const query = (ids, endpoint) => {
 }
 
 /**
+ * Query the marketplaces for various statistics about the resource
+ * @param ids A map of marketplace name to id. (e.g. {'spigot': '...', 'songoda': '...'})
+ * @returns {Promise<{last_updated: int, latest_version: string, name: string, average_rating: float, total_downloads: int, rating_count: int, lowest_price: float, lowest_price_currency: string}>}
+ */
+exports.get = async function(ids) {
+    return await Promise.all([
+        exports.downloads(ids),
+        exports.rating(ids),
+        exports.name(ids),
+        exports.latest_version(ids),
+        exports.price(ids)
+    ]).then(results => {
+        return {
+            name: results[2]['name'],
+            total_downloads: results[0],
+            average_rating: results[1]['average_rating'],
+            rating_count: results[1]['rating_count'],
+            latest_version: results[3]['latest_version'],
+            last_updated: results[3]['latest_version_published'],
+            lowest_price: results[4]['lowest_price'],
+            lowest_price_currency: results[4]['lowest_price_currency']
+        };
+    });
+}
+
+/**
+ * Query the marketplaces for the various prices and currency of the resource
+ * @param ids A map of marketplace name to id. (e.g. {'spigot': '...', 'songoda': '...'})
+ * @returns {Promise<*>} The result of the query returning a json object, containing the prices and currency on each platform, as well as a "lowest price" with its currency
+ */
+exports.price = function (ids) {
+    let endpointName = 'price';
+    return query(ids, endpointName).then(result => {
+        let lowestPrice = 0;
+        let lowestPriceCurrency = 'USD';
+        Object.entries(result['endpoints']).forEach(entry => {
+            let platformPrice = parseInt(entry[1]['price']);
+            let platformCurrency = entry[1]['currency'].toUpperCase();
+            lodash.set(result, `endpoints.${entry[0]}.price`, platformPrice);
+            lodash.set(result, `endpoints.${entry[0]}.currency`, platformCurrency);
+            if (platformPrice < lowestPrice || lowestPrice === 0) {
+                lowestPrice = platformPrice;
+                lowestPriceCurrency = platformCurrency;
+            }
+        });
+        lodash.set(result, 'lowest_price', lowestPrice);
+        lodash.set(result, 'lowest_price_currency', lowestPriceCurrency.toUpperCase());
+        return result;
+    }, error => {
+        return error;
+    });
+}
+
+/**
  * Query the marketplaces for their download counts and aggregate them together
  * @param ids A map of marketplace name to id. (e.g. {'spigot': '...', 'songoda': '...'})
  * @returns {Promise<*>} The result of the query returning a json object, containing the download counts for each marketplace endpoint and the 'total_downloads' count.

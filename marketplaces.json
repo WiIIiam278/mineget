@@ -28,6 +28,13 @@
             "average": "rating.average",
             "count": "rating.count"
           }
+        },
+        "price": {
+          "endpoint": "resources/{id}",
+          "returns": {
+            "price": "price",
+            "currency": "currency"
+          }
         }
       }
     },
@@ -56,8 +63,15 @@
         "rating": {
           "endpoint": "getResourceInfo?resource_id={id}",
           "returns": {
-            "average": "response.resource.reviews.stars",
+            "price": "response.resource.price",
             "count": "response.resource.reviews.count"
+          }
+        },
+        "price": {
+          "endpoint": "resources/{id}",
+          "returns": {
+            "price": "response.resource.price",
+            "currency": "response.resource.currency"
           }
         }
       }
@@ -82,6 +96,13 @@
           "returns": {
             "average": "data.rating",
             "count": "data.reviews"
+          }
+        },
+        "price": {
+          "endpoint": "products/id/{id}",
+          "returns": {
+            "price": "data.price",
+            "currency": "data.currency"
           }
         }
       }
