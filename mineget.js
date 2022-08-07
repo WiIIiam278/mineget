@@ -50,7 +50,7 @@ const query = (ids, endpoint) => {
 
             let url = marketplaces.platforms[platform].url;
             let path = marketplaces.platforms[platform].endpoints[endpoint].endpoint;
-            let fullUrl = (url + path).replace('{id}', id);
+            let fullUrl = (url + path).replace('{id}', id.toString());
 
             await fetch(fullUrl).then(result => {
                 if (result.status !== 200) {
@@ -59,7 +59,7 @@ const query = (ids, endpoint) => {
                 return result.json();
             }).then(json => {
                 lodash.set(response, `endpoints.${platform}`, {});
-                Object.entries(marketplaces.platforms[platform].endpoints[endpoint].returns).forEach(entry => {
+                Object.entries(marketplaces.platforms[platform].endpoints[endpoint]['returns']).forEach(entry => {
                     lodash.set(response, `endpoints.${platform}.${entry[0]}`, lodash.get(json, entry[1]));
                 });
             }).catch(fetchError => {
@@ -86,7 +86,7 @@ exports.get = async function(ids) {
     ]).then(results => {
         return {
             name: results[2]['name'],
-            total_downloads: results[0],
+            total_downloads: results[0]['total_downloads'],
             average_rating: results[1]['average_rating'],
             rating_count: results[1]['rating_count'],
             latest_version: results[3]['latest_version'],
@@ -108,7 +108,7 @@ exports.price = function (ids) {
         let lowestPrice = 0;
         let lowestPriceCurrency = 'USD';
         Object.entries(result['endpoints']).forEach(entry => {
-            let platformPrice = parseInt(entry[1]['price'] || 0);
+            let platformPrice = parseFloat(entry[1]['price'] || '0.00');
             let platformCurrency = (entry[1]['currency'] || 'USD').toUpperCase();
             lodash.set(result, `endpoints.${entry[0]}.price`, platformPrice);
             lodash.set(result, `endpoints.${entry[0]}.currency`, platformCurrency);
@@ -135,7 +135,7 @@ exports.downloads = function (ids) {
     return query(ids, endpointName).then(result => {
         let totalDownloads = 0;
         Object.entries(result['endpoints']).forEach(entry => {
-            let platformDownloads = parseInt(entry[1]['downloads']);
+            let platformDownloads = parseInt(entry[1]['downloads'] || '0');
             lodash.set(result, `endpoints.${entry[0]}.downloads`, platformDownloads);
             totalDownloads += platformDownloads;
         });
@@ -186,7 +186,7 @@ exports.latest_version = function (ids) {
             let platformLatestVersionName = entry[1]['version'];
             let platformLatestVersionDate = parseInt(entry[1]['published']);
             lodash.set(result, `endpoints.${entry[0]}.version`, platformLatestVersionName);
-            lodash.set(result, `endpoints.${entry[0]}.published`, parseInt(platformLatestVersionDate));
+            lodash.set(result, `endpoints.${entry[0]}.published`, parseInt(platformLatestVersionDate || '0'));
             if (platformLatestVersionDate > latestVersionDate) {
                 latestVersionName = platformLatestVersionName;
                 latestVersionDate = platformLatestVersionDate;
