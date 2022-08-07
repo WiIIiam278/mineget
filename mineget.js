@@ -108,8 +108,8 @@ exports.price = function (ids) {
         let lowestPrice = 0;
         let lowestPriceCurrency = 'USD';
         Object.entries(result['endpoints']).forEach(entry => {
-            let platformPrice = parseInt(entry[1]['price']);
-            let platformCurrency = entry[1]['currency'].toUpperCase();
+            let platformPrice = parseInt(entry[1]['price'] || 0);
+            let platformCurrency = (entry[1]['currency'] || 'USD').toUpperCase();
             lodash.set(result, `endpoints.${entry[0]}.price`, platformPrice);
             lodash.set(result, `endpoints.${entry[0]}.currency`, platformCurrency);
             if (platformPrice < lowestPrice || lowestPrice === 0) {
