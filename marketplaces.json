@@ -77,7 +77,7 @@
       }
     },
     "songoda": {
-      "url": "https://songoda.com/api/v2/",
+      "url": "https://marketplace.songoda.com/api/v2/",
       "endpoints": {
         "name": {
           "endpoint": "products/id/{id}",
