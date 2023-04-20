@@ -5,17 +5,17 @@
   "author": "William278 <will27528@gmail.com> (https://william278.net)",
   "homepage": "https://github.com/WiIIiam278/mineget",
   "funding": "https://www.buymeacoffee.com/William278",
-  "main": "mineget.js",
+  "main": "src/mineget.js",
   "bugs": {
     "url": "https://github.com/WiIIiam278/mineget/issues",
     "email": "will27528+mineget@gmail.com"
   },
   "files": [
-    "mineget.js",
-    "marketplaces.json"
+    "src/mineget.js",
+    "src/marketplaces.json"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test/tests.js --verbose"
   },
   "repository": {
     "type": "git",
@@ -34,5 +34,9 @@
   "dependencies": {
     "lodash": "^4.17.21",
     "node-fetch-cache": "^3.0.5"
+  },
+  "devDependencies": {
+    "assert": "^2.0.0",
+    "mocha": "^10.2.0"
   }
 }

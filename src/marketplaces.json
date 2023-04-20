@@ -136,7 +136,7 @@
         "downloads": {
           "endpoint": "repos/{id}/releases",
           "returns": {
-            "downloads": "sum(releases.assets[].download_count)"
+            "downloads": "releases.assets[].download_count"
           }
         },
         "latest_version": {
