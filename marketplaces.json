@@ -123,6 +123,30 @@
           }
         }
       }
+    },
+    "github": {
+      "url": "https://api.github.com/",
+      "endpoints": {
+        "name": {
+          "endpoint": "repos/{id}",
+          "returns": {
+            "name": "name"
+          }
+        },
+        "downloads": {
+          "endpoint": "repos/{id}/releases",
+          "returns": {
+            "downloads": "sum(releases.assets[].download_count)"
+          }
+        },
+        "latest_version": {
+          "endpoint": "repos/{id}/releases/latest",
+          "returns": {
+            "version": "tag_name",
+            "published": "published_at"
+          }
+        }
+      }
     }
   }
 }
