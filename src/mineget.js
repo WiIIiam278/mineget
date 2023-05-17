@@ -10,7 +10,7 @@ const fetch = fetchBuilder.withCache(new MemoryCache({
 
 /**
  * Query the marketplaces with the specified endpoints using the given ids.
- * @param ids A map of marketplace name to id. (e.g. {'spigot': '...', 'songoda': '...'})
+ * @param ids A map of marketplace name to id. (e.g. {'spigot': '...', 'craftaro': '...'})
  * @param endpoint The endpoint to query. (e.g. 'downloads')
  * @returns {Promise<unknown>} The result of the query
  */
@@ -73,7 +73,7 @@ const query = (ids, endpoint) => {
 
 /**
  * Query the marketplaces for various statistics about the resource
- * @param ids A map of marketplace name to id. (e.g. {'spigot': '...', 'songoda': '...'})
+ * @param ids A map of marketplace name to id. (e.g. {'spigot': '...', 'craftaro': '...'})
  * @returns {Promise<{last_updated: int, latest_version: string, name: string, average_rating: float, total_downloads: int, rating_count: int, lowest_price: float, lowest_price_currency: string}>}
  */
 exports.get = async function(ids) {
@@ -99,7 +99,7 @@ exports.get = async function(ids) {
 
 /**
  * Query the marketplaces for the various prices and currency of the resource
- * @param ids A map of marketplace name to id. (e.g. {'spigot': '...', 'songoda': '...'})
+ * @param ids A map of marketplace name to id. (e.g. {'spigot': '...', 'craftaro': '...'})
  * @returns {Promise<*>} The result of the query returning a json object, containing the prices and currency on each platform, as well as a "lowest price" with its currency
  */
 exports.price = function (ids) {
@@ -127,7 +127,7 @@ exports.price = function (ids) {
 
 /**
  * Query the marketplaces for their download counts and aggregate them together
- * @param ids A map of marketplace name to id. (e.g. {'spigot': '...', 'songoda': '...'})
+ * @param ids A map of marketplace name to id. (e.g. {'spigot': '...', 'craftaro': '...'})
  * @returns {Promise<*>} The result of the query returning a json object, containing the download counts for each marketplace endpoint and the 'total_downloads' count.
  */
 exports.downloads = function (ids) {
@@ -148,7 +148,7 @@ exports.downloads = function (ids) {
 
 /**
  * Query the marketplaces for their star ratings and aggregate them together
- * @param ids A map of marketplace name to id. (e.g. {'spigot': '...', 'songoda': '...'})
+ * @param ids A map of marketplace name to id. (e.g. {'spigot': '...', 'craftaro': '...'})
  * @returns {Promise<*>} The result of the query returning a json object, containing the star ratings for each marketplace endpoint and an aggregated 'average_rating' and 'rating_count'.
  */
 exports.rating = function (ids) {
@@ -174,7 +174,7 @@ exports.rating = function (ids) {
 
 /**
  * Query the marketplaces for the latest version of the resource on each one
- * @param ids A map of marketplace name to id. (e.g. {'spigot': '...', 'songoda': '...'})
+ * @param ids A map of marketplace name to id. (e.g. {'spigot': '...', 'craftaro': '...'})
  * @returns {Promise<*>} The result of the query returning a json object, containing the latest resource version for each marketplace endpoint and the most recently published version as the canonical 'latest_version', alongside 'latest_version_published' indicating when it was published.
  */
 exports.latest_version = function (ids) {
@@ -204,7 +204,7 @@ exports.latest_version = function (ids) {
 
 /**
  * Query the marketplaces for the name of the resource
- * @param ids A map of marketplace name to id. (e.g. {'spigot': '...', 'songoda': '...'})
+ * @param ids A map of marketplace name to id. (e.g. {'spigot': '...', 'craftaro': '...'})
  * @returns {Promise<*>} The result of the query returning a json object, containing the name of the resource for each marketplace endpoint.
  */
 exports.name = function (ids) {
