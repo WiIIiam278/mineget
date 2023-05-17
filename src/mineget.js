@@ -60,17 +60,6 @@ const query = (ids, endpoint) => {
             }).then(json => {
                 lodash.set(response, `endpoints.${platform}`, {});
                 Object.entries(marketplaces.platforms[platform].endpoints[endpoint]['returns']).forEach(entry => {
-                    if (entry[1].includes('[]')) {
-                        let arrayKey = entry[1].split('[]')[1];
-                        let array = [];
-                        lodash.get(json, entry[1].split('[]')[0]).forEach(element => {
-                            let obj = {};
-                            obj[arrayKey] = element;
-                            array.push(obj);
-                        });
-                        lodash.set(response, `endpoints.${platform}.${entry[0]}`, array);
-                        return;
-                    }
                     lodash.set(response, `endpoints.${platform}.${entry[0]}`, lodash.get(json, entry[1]));
                 });
             }).catch(fetchError => {

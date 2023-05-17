@@ -76,30 +76,23 @@
         }
       }
     },
-    "songoda": {
-      "url": "https://marketplace.songoda.com/api/v2/",
+    "craftaro": {
+      "url": "https://craftaro.com/api/v1/",
       "endpoints": {
         "name": {
-          "endpoint": "products/id/{id}",
+          "endpoint": "products/{id}",
           "returns": {
             "name": "data.name"
           }
         },
-        "downloads": {
-          "endpoint": "products/id/{id}",
-          "returns": {
-            "downloads": "data.downloads"
-          }
-        },
         "rating": {
-          "endpoint": "products/id/{id}",
+          "endpoint": "products/{id}",
           "returns": {
-            "average": "data.rating",
-            "count": "data.reviews"
+            "average": "data.rating"
           }
         },
         "price": {
-          "endpoint": "products/id/{id}",
+          "endpoint": "products/{id}",
           "returns": {
             "price": "data.price",
             "currency": "data.currency"
@@ -131,12 +124,6 @@
           "endpoint": "repos/{id}",
           "returns": {
             "name": "name"
-          }
-        },
-        "downloads": {
-          "endpoint": "repos/{id}/releases",
-          "returns": {
-            "downloads": "releases.assets[].download_count"
           }
         },
         "latest_version": {
