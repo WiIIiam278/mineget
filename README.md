@@ -13,7 +13,7 @@ const mineget = require('mineget');
 
 // Getting the total downloads of a resource
 // Methods accept an object containing mappings of marketplace IDs
-mineget.downloads({'spigot': 97144, 'polymart': 1634, 'songoda': 758
+mineget.downloads({'spigot': 97144, 'polymart': 1634, 'craftaro': 758
 }).then(result => {
     console.log(JSON.stringify(result));
 });
@@ -26,7 +26,7 @@ This example will return a json object with following:
     "spigot": {
       "downloads": 180
     },
-    "songoda": {
+    "craftaro": {
       "downloads": 2
     },
     "polymart": {
@@ -50,7 +50,7 @@ You can query the following marketplaces with this module. Note that not all mar
 |------------|-------------------------------------------------|--------|-------------|------------------|----------|---------|
 | `spigot`   | [Spigot](https://www.spigotmc.org/) &dagger;    | ✅      | ✅           | ✅                | ✅        | ✅       |
 | `polymart` | [Polymart](https://polymart.com/)               | ✅      | ✅           | ✅                | ✅        | ✅       |
-| `songoda`  | [Songoda Marketplace](https://songoda.com/)     | ✅      | ✅           | ❌                | ✅        | ✅       |
+| `craftaro` | [Craftaro](https://craftaro.com/)               | ✅      | ❌           | ❌                | ❌        | ✅       |
 | `modrinth` | [Modrinth](https://www.modrinth.com/) &ddagger; | ✅      | ✅           | ❌                | ❌        | ❌       |
 
 If you'd like to add support for more marketplaces and additional marketplace API mappings, you can do so by submitting a pull request editing the `marketplaces.json`.
