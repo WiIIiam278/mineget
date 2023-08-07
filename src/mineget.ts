@@ -51,7 +51,7 @@ type NameEndpointResponse = {
 type ObjectType<T extends Endpoints> =
     T extends "downloads" ? EndpointResponse<DownloadEndpointReponse> :
     T extends "rating" ? EndpointResponse<RatingRatingResponse> :
-    T extends "price" ? EndpointResponse<PriceEndpointResponse> :
+    T extends "price" ? EndpointResponse<PriceEndpointResponse> & { lowest_price: number, lowest_price_currency: string } :
     T extends "latest_version" ? EndpointResponse<LatestVersionEndpointResponse> :
     T extends "name" ? EndpointResponse<NameEndpointResponse> :
     EndpointResponse<object>;
@@ -143,7 +143,12 @@ export async function price(ids: Partial<AcceptedMarkets>) {
             lodash.set(res, 'lowest_price', lowestPrice);
             lodash.set(res, 'lowest_price_currency', lowestCurrency.toUpperCase());
             return res;
-        }, err => {
-            return err;
-        });
+        })
+        .catch((err) => {
+            return Promise.reject(err);
+        })
+}
+
+export default {
+    price
 }
