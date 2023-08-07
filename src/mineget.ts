@@ -5,7 +5,7 @@ import lodash, { last } from "lodash";
 type Endpoints = "downloads" | "rating" | "price" | "latest_version" | "name";
 type AcceptedMarkets = {
     spigot: number,
-    github: number,
+    github: string,
     craftaro: number,
     polymart: number,
     modrinth: string,
@@ -39,7 +39,8 @@ type PriceEndpointResponse = {
 
 type LatestVersionEndpointResponse = {
     [key: keyof AcceptedMarkets]: {
-
+        version: string,
+        published: number
     }
 }
 
@@ -109,7 +110,7 @@ async function query<T extends Endpoints & string>(ids: Partial<AcceptedMarkets>
             .then((json) => {
                 lodash.set(response, `endpoints.${platform}`, {});
                 for (const [name, value] of Object.entries(file.endpoints[endpoint]['returns'])) {
-                    lodash.set(response, `endpoints.${platform}.${name}`, Number(lodash.get(json, value as any)));
+                    lodash.set(response, `endpoints.${platform}.${name}`, lodash.get(json, value as string));
                 }
             })
             .catch((err) => {
@@ -134,7 +135,7 @@ export async function price(ids: Partial<AcceptedMarkets>) {
             for (const [name, data] of Object.entries(res.endpoints)) {
                 let platformPrice = parseFloat(data.price.toString() || '0.00');
                 let platformCurrency = (data.currency || 'USD').toUpperCase();
-                lodash.set(res, `endpoints.${name}.price`, platformPrice);
+                lodash.set(res, `endpoints.${name}.price`, Number(platformPrice));
                 lodash.set(res, `endpoints.${name}.currency`, platformCurrency);
                 if (platformPrice < lowestPrice || lowestPrice === 0) {
                     lowestPrice = platformPrice;
@@ -191,8 +192,35 @@ export async function rating(ids: Partial<AcceptedMarkets>) {
         });
 }
 
+export async function latest_version(ids: Partial<AcceptedMarkets>) {
+    return query(ids, 'latest_version')
+        .then((res) => {
+            let latestVersionName = '';
+            let latestVersionDate = 0;
+            for (const [name, data] of Object.entries(res.endpoints)) {
+                let platformLatestVersionName = data.version;
+                let platformLatestVersionDate = typeof data.published === 'string' ? lodash.parseInt(data.published) : data.published;
+                lodash.set(res, `endpoints.${name}.version`, platformLatestVersionName);
+                lodash.set(res, `endpoints.${name}.published`, (platformLatestVersionDate || '0'));
+                if (platformLatestVersionDate > latestVersionDate) {
+                    latestVersionName = platformLatestVersionName;
+                    latestVersionDate = platformLatestVersionDate;
+                }
+            }
+            if (latestVersionName !== '') {
+                lodash.set(res, 'latest_version', latestVersionName);
+                lodash.set(res, 'latest_version_published', latestVersionDate);
+            }
+            return res;
+        })
+        .catch((err) => {
+            return Promise.reject(err);
+        })
+}
+
 export default {
     price,
     downloads,
-    rating
+    rating,
+    latest_version
 }
