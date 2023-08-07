@@ -5,7 +5,7 @@
   "author": "William278 <will27528@gmail.com> (https://william278.net)",
   "homepage": "https://github.com/WiIIiam278/mineget",
   "funding": "https://www.buymeacoffee.com/William278",
-  "main": "src/mineget.js",
+  "main": "dist/mineget.js",
   "bugs": {
     "url": "https://github.com/WiIIiam278/mineget/issues",
     "email": "will27528+mineget@gmail.com"
@@ -15,7 +15,12 @@
     "src/marketplaces.json"
   ],
   "scripts": {
-    "test": "node test/tests.js --verbose"
+    "clean": "rimraf dist/",
+    "compile": "npm run clean && npm run test && npm run build",
+    "dev": "npm run clean && tsc && node .",
+    "build": "ncc build src/mineget.ts -m --license license.txt",
+    "run": "npm run clean && ncc run src/mineget.ts",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -36,7 +41,10 @@
     "node-fetch-cache": "^3.0.5"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.196",
+    "@types/node-fetch-cache": "^3.0.0",
     "assert": "^2.0.0",
-    "mocha": "^10.2.0"
+    "mocha": "^10.2.0",
+    "rimraf": "^5.0.1"
   }
 }
