@@ -1,0 +1,18 @@
+{
+    "url": "https://api.github.com/",
+    "endpoints": {
+        "name": {
+            "endpoint": "repos/{id}",
+            "returns": {
+                "name": "name"
+            }
+        },
+        "latest_version": {
+            "endpoint": "repos/{id}/releases/latest",
+            "returns": {
+                "version": "tag_name",
+                "published": "published_at"
+            }
+        }
+    }
+}

@@ -1,0 +1,38 @@
+{
+    "url": "https://api.polymart.org/v1/",
+    "endpoints": {
+        "name": {
+            "endpoint": "getResourceInfo?resource_id={id}",
+            "returns": {
+                "name": "name"
+            }
+        },
+        "downloads": {
+            "endpoint": "getResourceInfo?resource_id={id}",
+            "returns": {
+                "downloads": "response.resource.downloads"
+            }
+        },
+        "latest_version": {
+            "endpoint": "getResourceInfo?resource_id={id}",
+            "returns": {
+                "version": "response.resource.updates.latest.version",
+                "published": "response.resource.updates.latest.time"
+            }
+        },
+        "rating": {
+            "endpoint": "getResourceInfo?resource_id={id}",
+            "returns": {
+                "average": "response.resource.reviews.stars",
+                "count": "response.resource.reviews.count"
+            }
+        },
+        "price": {
+            "endpoint": "resources/{id}",
+            "returns": {
+                "price": "response.resource.price",
+                "currency": "response.resource.currency"
+            }
+        }
+    }
+}
