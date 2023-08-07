@@ -8,8 +8,8 @@ type AcceptedMarkets = {
     github: number,
     craftaro: number,
     polymart: number,
-    modrinth: number,
-    [key: string]: number
+    modrinth: string,
+    [key: string]: number | string
 }
 
 type EndpointResponse<T> = {
@@ -19,7 +19,7 @@ type EndpointResponse<T> = {
 
 type DownloadEndpointReponse = {
     [key: keyof AcceptedMarkets]: {
-
+        downloads: number
     }
 }
 
@@ -49,7 +49,7 @@ type NameEndpointResponse = {
 }
 
 type ObjectType<T extends Endpoints> =
-    T extends "downloads" ? EndpointResponse<DownloadEndpointReponse> :
+    T extends "downloads" ? EndpointResponse<DownloadEndpointReponse> & { total_downloads: number } :
     T extends "rating" ? EndpointResponse<RatingRatingResponse> :
     T extends "price" ? EndpointResponse<PriceEndpointResponse> & { lowest_price: number, lowest_price_currency: string } :
     T extends "latest_version" ? EndpointResponse<LatestVersionEndpointResponse> :
@@ -75,7 +75,7 @@ async function query<T extends Endpoints & string>(ids: Partial<AcceptedMarkets>
         if (typeof platform !== 'string') {
             throw new TypeError('Expected key value to be of type string.');
         }
-        if (typeof id !== ('number')) {
+        if (typeof id !== ('number') && typeof id !== 'string') {
             throw new TypeError('Expected pair value to be of type number.');
         }
 
@@ -149,6 +149,25 @@ export async function price(ids: Partial<AcceptedMarkets>) {
         })
 }
 
+export async function downloads(ids: Partial<AcceptedMarkets>) {
+    return query(ids, 'downloads')
+        .then((res) => {
+            let totalDownloads = 0;
+            for (const [name, data] of Object.entries(res.endpoints)) {
+                let platformDownloads = lodash.parseInt(data.downloads.toString() || '0');
+                lodash.set(res, `endpoints.${name}.downloads`, platformDownloads);
+                totalDownloads += platformDownloads;
+            }
+            lodash.set(res, 'total_downloads', totalDownloads);
+            return res;
+        })
+        .catch((err) => {
+            return Promise.reject(err);
+        });
+}
+
+
 export default {
-    price
+    price,
+    downloads
 }
