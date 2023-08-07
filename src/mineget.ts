@@ -46,7 +46,7 @@ type LatestVersionEndpointResponse = {
 
 type NameEndpointResponse = {
     [key: keyof AcceptedMarkets]: {
-
+        name: string
     }
 }
 
@@ -218,9 +218,20 @@ export async function latest_version(ids: Partial<AcceptedMarkets>) {
         })
 }
 
+export async function name(ids: Partial<AcceptedMarkets>) {
+    return query(ids, 'name')
+        .then((res) => {
+            return res;
+        })
+        .catch((err) => {
+            return Promise.reject(err);
+        })
+}
+
 export default {
     price,
     downloads,
     rating,
-    latest_version
+    latest_version,
+    name
 }
