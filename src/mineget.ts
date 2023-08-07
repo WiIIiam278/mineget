@@ -25,7 +25,8 @@ type DownloadEndpointReponse = {
 
 type RatingRatingResponse = {
     [key: keyof AcceptedMarkets]: {
-
+        average: number,
+        count: number
     }
 }
 
@@ -50,7 +51,7 @@ type NameEndpointResponse = {
 
 type ObjectType<T extends Endpoints> =
     T extends "downloads" ? EndpointResponse<DownloadEndpointReponse> & { total_downloads: number } :
-    T extends "rating" ? EndpointResponse<RatingRatingResponse> :
+    T extends "rating" ? EndpointResponse<RatingRatingResponse> & { average_rating: number, rating_count: number } :
     T extends "price" ? EndpointResponse<PriceEndpointResponse> & { lowest_price: number, lowest_price_currency: string } :
     T extends "latest_version" ? EndpointResponse<LatestVersionEndpointResponse> :
     T extends "name" ? EndpointResponse<NameEndpointResponse> :
@@ -108,7 +109,7 @@ async function query<T extends Endpoints & string>(ids: Partial<AcceptedMarkets>
             .then((json) => {
                 lodash.set(response, `endpoints.${platform}`, {});
                 for (const [name, value] of Object.entries(file.endpoints[endpoint]['returns'])) {
-                    lodash.set(response, `endpoints.${platform}.${name}`, Number(lodash.get(json, value as string)));
+                    lodash.set(response, `endpoints.${platform}.${name}`, Number(lodash.get(json, value as any)));
                 }
             })
             .catch((err) => {
@@ -166,8 +167,32 @@ export async function downloads(ids: Partial<AcceptedMarkets>) {
         });
 }
 
+export async function rating(ids: Partial<AcceptedMarkets>) {
+    return query(ids, 'rating')
+        .then((res) => {
+            let totalRating = 0;
+            let totalRatingCount = 0;
+            for (const [name, data] of Object.entries(res.endpoints)) {
+                if (typeof data.average !== 'number') data.average = -1;
+                if (typeof data.count !== 'number') data.count = -1;
+                let platformAverage = parseFloat(data.average.toString());
+                let platformCount = lodash.parseInt(data.count.toString());
+                lodash.set(res, `endpoints.${name}.average`, platformAverage);
+                lodash.set(res, `endpoints.${name}.count`, platformCount);
+                totalRating += (platformAverage * platformCount);
+                totalRatingCount += platformCount;
+            }
+            lodash.set(res, 'average_rating', totalRating / totalRatingCount);
+            lodash.set(res, 'rating_count', totalRatingCount);
+            return res;
+        })
+        .catch((err) => {
+            return Promise.reject(err);
+        });
+}
 
 export default {
     price,
-    downloads
+    downloads,
+    rating
 }
