@@ -28,7 +28,7 @@
             }
         },
         "price": {
-            "endpoint": "resources/{id}",
+            "endpoint": "getResourceInfo?resource_id={id}",
             "returns": {
                 "price": "response.resource.price",
                 "currency": "response.resource.currency"
