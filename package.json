@@ -15,7 +15,7 @@
     "src/marketplaces.json"
   ],
   "scripts": {
-    "test": "node test/tests.js --verbose"
+    "test": "mocha --verbose"
   },
   "repository": {
     "type": "git",
