@@ -1,0 +1,22 @@
+{
+    "include": [
+        "./src/",
+        "./test/"
+    ],
+    "exclude": [
+        "node_modules"
+    ],
+    "compilerOptions": {
+        "allowArbitraryExtensions": true,
+        "allowUnreachableCode": false,
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "strictNullChecks": true,
+        "noUnusedParameters": true,
+        "pretty": true,
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "moduleResolution": "Node16",
+        "outDir": "dist"
+    }
+}
