@@ -32,7 +32,7 @@ type RatingRatingResponse = {
 type PriceEndpointResponse = {
     [key: keyof AcceptedMarkets]: {
         price: number,
-        currency: number
+        currency: string
     }
 }
 
@@ -128,17 +128,22 @@ export async function price(ids: Partial<AcceptedMarkets>) {
     const endpointName = 'price';
     return query(ids, endpointName)
         .then((res) => {
-            console.log(res)
             let lowestPrice = 0;
             let lowestCurrency = 'USD';
             for (const [name, data] of Object.entries(res.endpoints)) {
-                console.log(data)
-                let platformPrice = parseFloat(data.price.toString())
+                let platformPrice = parseFloat(data.price.toString() || '0.00');
+                let platformCurrency = (data.currency || 'USD').toUpperCase();
+                lodash.set(res, `endpoints.${name}.price`, platformPrice);
+                lodash.set(res, `endpoints.${name}.currency`, platformCurrency);
+                if (platformPrice < lowestPrice || lowestPrice === 0) {
+                    lowestPrice = platformPrice;
+                    lowestCurrency = platformCurrency;
+                }
             }
-        })
+            lodash.set(res, 'lowest_price', lowestPrice);
+            lodash.set(res, 'lowest_price_currency', lowestCurrency.toUpperCase());
+            return res;
+        }, err => {
+            return err;
+        });
 }
-
-price({ spigot: 92672 })
-    .then((res) => {
-        console.log(res)
-    })
