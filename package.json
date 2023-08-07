@@ -15,12 +15,11 @@
     "src/marketplaces.json"
   ],
   "scripts": {
+    "test": "ts-mocha test/*.ts",
     "clean": "rimraf dist/",
-    "compile": "npm run clean && npm run test && npm run build",
-    "dev": "npm run clean && tsc && node .",
+    "dev": "npm run clean && tsc && npm run test && node .",
     "build": "ncc build src/mineget.ts -m --license license.txt",
-    "run": "npm run clean && ncc run src/mineget.ts",
-    "test": "mocha"
+    "run": "npm run clean && ncc run src/mineget.ts"
   },
   "repository": {
     "type": "git",
@@ -42,6 +41,7 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.14.196",
+    "@types/mocha": "^10.0.1",
     "@types/node-fetch-cache": "^3.0.0",
     "assert": "^2.0.0",
     "mocha": "^10.2.0",
