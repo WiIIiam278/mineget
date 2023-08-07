@@ -1,6 +1,5 @@
 import assert from "assert";
 import mineget from "../src/mineget";
-import { min } from "lodash";
 
 describe('mineget', function () {
     describe('#price() method on all platforms', function () {
