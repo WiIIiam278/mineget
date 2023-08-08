@@ -76,16 +76,13 @@ async function query<T extends Endpoints & string>(ids: Partial<PackagedMarkets>
         const file = require(`../endpoints/${platform}`);
 
         if (!file) {
-            lodash.set(response, `status`, `error`)
-            lodash.set(response, `message`, `Unknown platform ${platform}`)
+            Promise.reject(`Unknown platform ${platform}`);
         }
         if (!file.endpoints) {
-            lodash.set(response, `status`, 'error');
-            lodash.set(response, `message`, `No endpoints for ${platform}`);
+            Promise.reject(`No endpoints for ${platform}`);
         }
         if (!file.endpoints[endpoint]) {
-            lodash.set(response, `status`, 'error');
-            lodash.set(response, `message`, `No endpoint ${endpoint} for ${platform}`);
+            Promise.reject(`No endpoint ${endpoint} for ${platform}`);
         }
 
         const url = file.url;
