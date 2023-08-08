@@ -3,51 +3,40 @@ import { fetchBuilder, MemoryCache } from "node-fetch-cache";
 import lodash, { last } from "lodash";
 
 type Endpoints = "downloads" | "rating" | "price" | "latest_version" | "name";
-type AcceptedMarkets = {
+type PackagedMarkets = {
     spigot: number,
     github: string,
     craftaro: number,
     polymart: number,
     modrinth: string,
-    [key: string]: number | string
 }
 
 type EndpointResponse<T> = {
     status: 'success' | 'error',
-    endpoints: T
+    endpoints: Record<keyof PackagedMarkets, T>
 }
 
 type DownloadEndpointReponse = {
-    [key: keyof AcceptedMarkets]: {
-        downloads: number
-    }
+    downloads: number
 }
 
 type RatingRatingResponse = {
-    [key: keyof AcceptedMarkets]: {
-        average: number,
-        count: number
-    }
+    average: number,
+    count: number
 }
 
 type PriceEndpointResponse = {
-    [key: keyof AcceptedMarkets]: {
-        price: number,
-        currency: string
-    }
+    price: number,
+    currency: string
 }
 
 type LatestVersionEndpointResponse = {
-    [key: keyof AcceptedMarkets]: {
-        version: string,
-        published: number
-    }
+    version: string,
+    published: number
 }
 
 type NameEndpointResponse = {
-    [key: keyof AcceptedMarkets]: {
-        name: string
-    }
+    name: string
 }
 
 type ObjectType<T extends Endpoints> =
@@ -65,7 +54,7 @@ const fetch = fetchBuilder.withCache(new MemoryCache({
 /**
  * Queries the marketplace
  */
-async function query<T extends Endpoints & string>(ids: Partial<AcceptedMarkets>, endpoint: T): Promise<ObjectType<T>> {
+async function query<T extends Endpoints & string>(ids: Partial<PackagedMarkets>, endpoint: T): Promise<ObjectType<T>> {
     let response = {
         status: 'success',
         endpoints: {}
@@ -114,29 +103,38 @@ async function query<T extends Endpoints & string>(ids: Partial<AcceptedMarkets>
                 }
             })
             .catch((err) => {
-                return Promise.reject(err.message);
+                return Promise.reject(err);
             })
     }
     return response as ObjectType<T>;
 }
 
-// export async function get(ids: Partial<AcceptedMarkets>) {
-//     return await Promise.all([
-//         downloads(ids),
-//         rating(ids),
-//         name(ids),
-//         latest_version(ids),
-//         price(ids)
-//     ])
-//         .then((res) => {
-//             return {
-//                 name: res[2].endpoints['name'],
-//                 total_downloads: res[3]
-//             }
-//         })
-// }
+export async function get(ids: Partial<PackagedMarkets>) {
+    return await Promise.all([
+        downloads(ids),
+        rating(ids),
+        name(ids),
+        latest_version(ids),
+        price(ids)
+    ])
+        .then((res) => {
+            return {
+                name: res[2].endpoints,
+                total_downloads: res[0].total_downloads,
+                average_rating: res[1].average_rating,
+                rating_count: res[1].rating_count,
+                latest_version: res[3].latest_version,
+                last_updated: res[3].latest_version_published,
+                lowest_price: res[4].lowest_price,
+                lowest_price_currency: res[4].lowest_price_currency
+            }
+        })
+        .catch((err) => {
+            return Promise.reject(err)
+        })
+}
 
-export async function price(ids: Partial<AcceptedMarkets>) {
+export async function price(ids: Partial<PackagedMarkets>) {
     const endpointName = 'price';
     return query(ids, endpointName)
         .then((res) => {
@@ -161,7 +159,7 @@ export async function price(ids: Partial<AcceptedMarkets>) {
         })
 }
 
-export async function downloads(ids: Partial<AcceptedMarkets>) {
+export async function downloads(ids: Partial<PackagedMarkets>) {
     return query(ids, 'downloads')
         .then((res) => {
             let totalDownloads = 0;
@@ -178,7 +176,7 @@ export async function downloads(ids: Partial<AcceptedMarkets>) {
         });
 }
 
-export async function rating(ids: Partial<AcceptedMarkets>) {
+export async function rating(ids: Partial<PackagedMarkets>) {
     return query(ids, 'rating')
         .then((res) => {
             let totalRating = 0;
@@ -202,7 +200,7 @@ export async function rating(ids: Partial<AcceptedMarkets>) {
         });
 }
 
-export async function latest_version(ids: Partial<AcceptedMarkets>) {
+export async function latest_version(ids: Partial<PackagedMarkets>) {
     return query(ids, 'latest_version')
         .then((res) => {
             let latestVersionName = '';
@@ -228,7 +226,7 @@ export async function latest_version(ids: Partial<AcceptedMarkets>) {
         })
 }
 
-export async function name(ids: Partial<AcceptedMarkets>) {
+export async function name(ids: Partial<PackagedMarkets>) {
     return query(ids, 'name')
         .then((res) => {
             return res;
@@ -239,6 +237,7 @@ export async function name(ids: Partial<AcceptedMarkets>) {
 }
 
 export default {
+    get,
     price,
     downloads,
     rating,
