@@ -16,11 +16,11 @@ type EndpointResponse<T> = {
     endpoints: Record<keyof PackagedMarkets, T>
 }
 
-type DownloadEndpointReponse = {
+type DownloadEndpointResponse = {
     downloads: number
 }
 
-type RatingRatingResponse = {
+type RatingEndpointResponse = {
     average: number,
     count: number
 }
@@ -40,8 +40,8 @@ type NameEndpointResponse = {
 }
 
 type ObjectType<T extends Endpoints> =
-    T extends "downloads" ? EndpointResponse<DownloadEndpointReponse> & { total_downloads: number } :
-    T extends "rating" ? EndpointResponse<RatingRatingResponse> & { average_rating: number, rating_count: number } :
+    T extends "downloads" ? EndpointResponse<DownloadEndpointResponse> & { total_downloads: number } :
+    T extends "rating" ? EndpointResponse<RatingEndpointResponse> & { average_rating: number, rating_count: number } :
     T extends "price" ? EndpointResponse<PriceEndpointResponse> & { lowest_price: number, lowest_price_currency: string } :
     T extends "latest_version" ? EndpointResponse<LatestVersionEndpointResponse> & { latest_version: string, latest_version_published: number } :
     T extends "name" ? EndpointResponse<NameEndpointResponse> :
@@ -52,7 +52,10 @@ const fetch = fetchBuilder.withCache(new MemoryCache({
 }));
 
 /**
- * Queries the marketplace
+ * Query the marketplaces with the specified endpoints using the given ids.
+ * @param ids A map of marketplace name to id.
+ * @param endpoint The endpoint to query.
+ * @returns The result of the query
  */
 async function query<T extends Endpoints & string>(ids: Partial<PackagedMarkets>, endpoint: T): Promise<ObjectType<T>> {
     let response = {
@@ -109,6 +112,11 @@ async function query<T extends Endpoints & string>(ids: Partial<PackagedMarkets>
     return response as ObjectType<T>;
 }
 
+/**
+ * Query the marketplaces for various statistics about the resource
+ * @param ids Key/value pairs of marketplace name to id.
+ * @returns An object with exposed information
+ */
 export async function get(ids: Partial<PackagedMarkets>) {
     return await Promise.all([
         downloads(ids),
@@ -134,6 +142,11 @@ export async function get(ids: Partial<PackagedMarkets>) {
         })
 }
 
+/**
+ * Query the marketplaces for the various prices and currency of the resource
+ * @param ids Key/value pairs of marketplace name to id.
+ * @returns The result of the query returning a json object, containing the prices and currency on each platform, as well as a "lowest price" with its currency
+ */
 export async function price(ids: Partial<PackagedMarkets>) {
     const endpointName = 'price';
     return query(ids, endpointName)
@@ -159,6 +172,11 @@ export async function price(ids: Partial<PackagedMarkets>) {
         })
 }
 
+/**
+ * Query the marketplaces for their download counts and aggregate them together
+ * @param ids Key/value pairs of marketplace name to id.
+ * @returns The result of the query returning a json object, containing the download counts for each marketplace endpoint and the 'total_downloads' count.
+ */
 export async function downloads(ids: Partial<PackagedMarkets>) {
     return query(ids, 'downloads')
         .then((res) => {
@@ -176,6 +194,11 @@ export async function downloads(ids: Partial<PackagedMarkets>) {
         });
 }
 
+/**
+ * Query the marketplaces for their star ratings and aggregate them together
+ * @param ids Key/value pairs of marketplace name to id.
+ * @returns The result of the query returning a json object, containing the star ratings for each marketplace endpoint and an aggregated 'average_rating' and 'rating_count'.
+ */
 export async function rating(ids: Partial<PackagedMarkets>) {
     return query(ids, 'rating')
         .then((res) => {
@@ -200,6 +223,11 @@ export async function rating(ids: Partial<PackagedMarkets>) {
         });
 }
 
+/**
+ * Query the marketplaces for the latest version of the resource on each one
+ * @param ids Key/value pairs of marketplace name to id.
+ * @returns The result of the query returning a json object, containing the latest resource version for each marketplace endpoint and the most recently published version as the canonical 'latest_version', alongside 'latest_version_published' indicating when it was published.
+ */
 export async function latest_version(ids: Partial<PackagedMarkets>) {
     return query(ids, 'latest_version')
         .then((res) => {
@@ -226,6 +254,11 @@ export async function latest_version(ids: Partial<PackagedMarkets>) {
         })
 }
 
+/**
+ * Query the marketplaces for the name of the resource
+ * @param ids Key/value pairs of marketplace name to id.
+ * @returns The result of the query returning a json object, containing the name of the resource for each marketplace endpoint.
+ */
 export async function name(ids: Partial<PackagedMarkets>) {
     return query(ids, 'name')
         .then((res) => {
