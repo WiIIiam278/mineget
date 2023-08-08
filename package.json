@@ -3,6 +3,9 @@
   "version": "3.0.0",
   "description": "Get aggregated statistics about a Minecraft resource from multiple marketplaces",
   "author": "William278 <will27528@gmail.com> (https://william278.net)",
+  "contributors": [
+    "Iotados <Iotados2020@gmail.com> (https://github.com/Iotados/)"
+  ],
   "homepage": "https://github.com/WiIIiam278/mineget",
   "funding": "https://www.buymeacoffee.com/William278",
   "main": "./dist/index.js",
