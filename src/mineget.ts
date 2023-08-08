@@ -69,8 +69,8 @@ async function query<T extends Endpoints & string>(ids: Partial<PackagedMarkets>
         if (typeof platform !== 'string') {
             throw new TypeError('Expected key value to be of type string.');
         }
-        if (typeof id !== ('number') && typeof id !== 'string') {
-            throw new TypeError('Expected pair value to be of type number.');
+        if (typeof id !== 'number' && typeof id !== 'string') {
+            throw new TypeError('Expected pair value to be of type number or string.');
         }
 
         const file = require(`../endpoints/${platform}`);
