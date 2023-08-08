@@ -6,6 +6,7 @@
   "homepage": "https://github.com/WiIIiam278/mineget",
   "funding": "https://www.buymeacoffee.com/William278",
   "main": "dist/mineget.js",
+  "types": "dist/types.d.ts",
   "bugs": {
     "url": "https://github.com/WiIIiam278/mineget/issues",
     "email": "will27528+mineget@gmail.com"
@@ -15,10 +16,9 @@
     "src/marketplaces.json"
   ],
   "scripts": {
-    "test": "ts-mocha test/*.ts",
     "clean": "rimraf dist/",
-    "dev": "npm run clean && tsc && npm run test && node .",
-    "build": "ncc build src/mineget.ts -m --license license.txt",
+    "test": "ts-mocha test/*.ts",
+    "build": "npm run clean && tsc",
     "run": "npm run clean && ncc run src/mineget.ts"
   },
   "repository": {
@@ -43,6 +43,7 @@
     "@types/lodash": "^4.14.196",
     "@types/mocha": "^10.0.1",
     "@types/node-fetch-cache": "^3.0.0",
+    "@vercel/ncc": "^0.36.1",
     "assert": "^2.0.0",
     "mocha": "^10.2.0",
     "rimraf": "^5.0.1"
