@@ -1,21 +1,32 @@
 {
   "name": "mineget",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Get aggregated statistics about a Minecraft resource from multiple marketplaces",
   "author": "William278 <will27528@gmail.com> (https://william278.net)",
+  "contributors": [
+    "Iotados <Iotados2020@gmail.com> (https://github.com/Iotados/)"
+  ],
   "homepage": "https://github.com/WiIIiam278/mineget",
   "funding": "https://www.buymeacoffee.com/William278",
-  "main": "src/mineget.js",
+  "main": "./dist/index.js",
+  "types": "./dist/mineget.d.ts",
   "bugs": {
     "url": "https://github.com/WiIIiam278/mineget/issues",
     "email": "will27528+mineget@gmail.com"
   },
   "files": [
-    "src/mineget.js",
-    "src/marketplaces.json"
+    "dist/*",
+    "endpoints/"
   ],
+  "directories": {
+    "lib": "dist",
+    "doc": "ReadMe.md"
+  },
   "scripts": {
-    "test": "node test/tests.js --verbose"
+    "clean": "rimraf dist/",
+    "test": "ts-mocha test/*.ts",
+    "build": "npm run clean && ncc build src/mineget.ts -m --license licenses.txt",
+    "run": "npm run clean && ncc run src/mineget.ts"
   },
   "repository": {
     "type": "git",
@@ -36,7 +47,13 @@
     "node-fetch-cache": "^3.0.5"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.196",
+    "@types/mocha": "^10.0.1",
+    "@types/node-fetch-cache": "^3.0.0",
+    "@vercel/ncc": "^0.36.1",
     "assert": "^2.0.0",
-    "mocha": "^10.2.0"
+    "mocha": "^10.2.0",
+    "rimraf": "^5.0.1",
+    "typescript": "^5.1.6"
   }
 }

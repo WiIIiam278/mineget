@@ -1,0 +1,17 @@
+{
+    "url": "https://api.modrinth.com/v2/",
+    "endpoints": {
+        "name": {
+            "endpoint": "project/{id}",
+            "returns": {
+                "name": "title"
+            }
+        },
+        "downloads": {
+            "endpoint": "project/{id}",
+            "returns": {
+                "downloads": "downloads"
+            }
+        }
+    }
+}

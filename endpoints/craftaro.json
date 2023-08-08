@@ -1,0 +1,24 @@
+{
+    "url": "https://craftaro.com/api/v1/",
+    "endpoints": {
+        "name": {
+            "endpoint": "products/{id}",
+            "returns": {
+                "name": "data.name"
+            }
+        },
+        "rating": {
+            "endpoint": "products/{id}",
+            "returns": {
+                "average": "data.rating"
+            }
+        },
+        "price": {
+            "endpoint": "products/{id}",
+            "returns": {
+                "price": "data.price",
+                "currency": "data.currency"
+            }
+        }
+    }
+}

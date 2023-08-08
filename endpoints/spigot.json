@@ -1,0 +1,38 @@
+{
+    "url": "https://api.spiget.org/v2/",
+    "endpoints": {
+        "name": {
+            "endpoint": "resources/{id}",
+            "returns": {
+                "name": "name"
+            }
+        },
+        "downloads": {
+            "endpoint": "resources/{id}",
+            "returns": {
+                "downloads": "downloads"
+            }
+        },
+        "latest_version": {
+            "endpoint": "resources/{id}/versions/latest",
+            "returns": {
+                "version": "name",
+                "published": "releaseDate"
+            }
+        },
+        "rating": {
+            "endpoint": "resources/{id}",
+            "returns": {
+                "average": "rating.average",
+                "count": "rating.count"
+            }
+        },
+        "price": {
+            "endpoint": "resources/{id}",
+            "returns": {
+                "price": "price",
+                "currency": "currency"
+            }
+        }
+    }
+}

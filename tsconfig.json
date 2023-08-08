@@ -1,0 +1,26 @@
+{
+    "include": [
+        "./src/",
+        ".endpoints/*.json"
+    ],
+    "exclude": [
+        "node_modules",
+        "./test/"
+    ],
+    "compilerOptions": {
+        "allowArbitraryExtensions": true,
+        "allowUnreachableCode": false,
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "strictNullChecks": true,
+        "noUnusedParameters": true,
+        "pretty": true,
+        "strict": true,
+        "esModuleInterop": true,
+        "moduleResolution": "Node16",
+        "outDir": "dist",
+        "declaration": true,
+        "declarationMap": true,
+        "module": "Node16"
+    },
+}
