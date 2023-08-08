@@ -62,6 +62,7 @@ async function query<T extends Endpoints & string>(ids: Partial<PackagedMarkets>
         status: 'success',
         endpoints: {}
     }
+    const objectSize = Object.entries(ids).length;
     for (const [platform, id] of Object.entries(ids)) {
         if (!platform || !id) {
             continue;
@@ -81,8 +82,11 @@ async function query<T extends Endpoints & string>(ids: Partial<PackagedMarkets>
         if (!file?.endpoints) {
             return Promise.reject(new ReferenceError(`No endpoints for ${platform}`));
         }
-        if (!file?.endpoints[endpoint]) {
-            return Promise.reject(new ReferenceError(`No endpoint ${endpoint} for ${platform}`));
+        if ((!file?.endpoints[endpoint]) && objectSize === 1) {
+            return Promise.reject(new ReferenceError(`No endpoint called ${endpoint} for ${platform}`))
+        }
+        if ((!file?.endpoints[endpoint]) && objectSize > 1) {
+            continue;
         }
 
         const url = file.url;
@@ -92,7 +96,7 @@ async function query<T extends Endpoints & string>(ids: Partial<PackagedMarkets>
         await fetch(fullUrl)
             .then((res) => {
                 if (res.status !== 200) {
-                    Promise.reject(new Error(`Querying ${fullUrl} returned status: [${res.status}]: ${res.statusText}`));
+                    return Promise.reject(new Error(`Querying ${fullUrl} returned status: [${res.status}]: ${res.statusText}`));
                 }
                 return res.json();
             })
@@ -103,7 +107,7 @@ async function query<T extends Endpoints & string>(ids: Partial<PackagedMarkets>
                 }
             })
             .catch((err) => {
-                Promise.reject(err);
+                return Promise.reject(err);
             })
     }
     return response as ObjectType<T>;
