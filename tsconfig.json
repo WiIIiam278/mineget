@@ -1,6 +1,7 @@
 {
     "include": [
         "./src/",
+        ".endpoints/*.json"
     ],
     "exclude": [
         "node_modules",
@@ -16,7 +17,6 @@
         "pretty": true,
         "strict": true,
         "esModuleInterop": true,
-        "resolveJsonModule": true,
         "moduleResolution": "Node16",
         "outDir": "dist",
         "declaration": true,
