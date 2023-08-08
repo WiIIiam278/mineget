@@ -54,7 +54,7 @@ type ObjectType<T extends Endpoints> =
     T extends "downloads" ? EndpointResponse<DownloadEndpointReponse> & { total_downloads: number } :
     T extends "rating" ? EndpointResponse<RatingRatingResponse> & { average_rating: number, rating_count: number } :
     T extends "price" ? EndpointResponse<PriceEndpointResponse> & { lowest_price: number, lowest_price_currency: string } :
-    T extends "latest_version" ? EndpointResponse<LatestVersionEndpointResponse> :
+    T extends "latest_version" ? EndpointResponse<LatestVersionEndpointResponse> & { latest_version: string, latest_version_published: number } :
     T extends "name" ? EndpointResponse<NameEndpointResponse> :
     EndpointResponse<object>;
 
@@ -122,8 +122,18 @@ async function query<T extends Endpoints & string>(ids: Partial<AcceptedMarkets>
 
 // export async function get(ids: Partial<AcceptedMarkets>) {
 //     return await Promise.all([
-
+//         downloads(ids),
+//         rating(ids),
+//         name(ids),
+//         latest_version(ids),
+//         price(ids)
 //     ])
+//         .then((res) => {
+//             return {
+//                 name: res[2].endpoints['name'],
+//                 total_downloads: res[3]
+//             }
+//         })
 // }
 
 export async function price(ids: Partial<AcceptedMarkets>) {
