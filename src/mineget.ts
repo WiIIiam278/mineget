@@ -76,13 +76,13 @@ async function query<T extends Endpoints & string>(ids: Partial<PackagedMarkets>
         const file = require(`../endpoints/${platform}`);
 
         if (!file) {
-            Promise.reject(`Unknown platform ${platform}`);
+            return Promise.reject(new ReferenceError(`Unknown platform ${platform}`));
         }
-        if (!file.endpoints) {
-            Promise.reject(`No endpoints for ${platform}`);
+        if (!file?.endpoints) {
+            return Promise.reject(new ReferenceError(`No endpoints for ${platform}`));
         }
-        if (!file.endpoints[endpoint]) {
-            Promise.reject(`No endpoint ${endpoint} for ${platform}`);
+        if (!file?.endpoints[endpoint]) {
+            return Promise.reject(new ReferenceError(`No endpoint ${endpoint} for ${platform}`));
         }
 
         const url = file.url;
@@ -92,7 +92,7 @@ async function query<T extends Endpoints & string>(ids: Partial<PackagedMarkets>
         await fetch(fullUrl)
             .then((res) => {
                 if (res.status !== 200) {
-                    throw new Error(`Querying ${fullUrl} returned status: [${res.status}]: ${res.statusText}`)
+                    Promise.reject(new Error(`Querying ${fullUrl} returned status: [${res.status}]: ${res.statusText}`));
                 }
                 return res.json();
             })
@@ -103,7 +103,7 @@ async function query<T extends Endpoints & string>(ids: Partial<PackagedMarkets>
                 }
             })
             .catch((err) => {
-                return Promise.reject(err);
+                Promise.reject(err);
             })
     }
     return response as ObjectType<T>;
@@ -162,7 +162,7 @@ export async function price(ids: Partial<PackagedMarkets>) {
             }
             lodash.set(res, 'lowest_price', lowestPrice);
             lodash.set(res, 'lowest_price_currency', lowestCurrency.toUpperCase());
-            return res;
+            return Promise.resolve(res);
         })
         .catch((err) => {
             return Promise.reject(err);
