@@ -1,20 +1,24 @@
 {
   "name": "mineget",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Get aggregated statistics about a Minecraft resource from multiple marketplaces",
   "author": "William278 <will27528@gmail.com> (https://william278.net)",
   "homepage": "https://github.com/WiIIiam278/mineget",
   "funding": "https://www.buymeacoffee.com/William278",
-  "main": "dist/mineget.js",
-  "types": "dist/types.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/mineget.d.ts",
   "bugs": {
     "url": "https://github.com/WiIIiam278/mineget/issues",
     "email": "will27528+mineget@gmail.com"
   },
   "files": [
-    "src/mineget.js",
-    "src/marketplaces.json"
+    "dist/*",
+    "endpoints/"
   ],
+  "directories": {
+    "lib": "dist",
+    "doc": "ReadMe.md"
+  },
   "scripts": {
     "clean": "rimraf dist/",
     "test": "ts-mocha test/*.ts",
