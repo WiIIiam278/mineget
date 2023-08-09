@@ -286,22 +286,18 @@ export async function name(ids: Partial<PackagedMarkets>) {
 
 const isDateString = (string: string) => {
     if (string.match(/^(?:(\d{4})(?:-(\d{2}))?(?:-(\d{2}))?)?(?:T(\d{2}:\d{2})(?::(\d{2}))?(?:.(\d{3})|Z)?(?:(?:[+-])(\d{2}:\d{2}))?)?$/)) {
-        console.log('true')
         return true;
     }
     else {
-        console.log('false')
         return false;
     }
 }
 
 const isUnixString = (string: string) => {
     if (string.match(/^(\d{6,13})$/)) {
-        console.log('true');
         return true;
     }
     else {
-        console.log('false');
         return false;
     }
 }
