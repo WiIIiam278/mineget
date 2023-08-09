@@ -236,11 +236,21 @@ export async function rating(ids: Partial<PackagedMarkets>) {
 export async function latest_version(ids: Partial<PackagedMarkets>) {
     return query(ids, 'latest_version')
         .then((res) => {
+            console.log(res)
             let latestVersionName = '';
             let latestVersionDate = 0;
             for (const [name, data] of Object.entries(res.endpoints)) {
                 let platformLatestVersionName = data.version;
-                let platformLatestVersionDate = typeof data.published === 'string' ? Date.parse(data.published) : data.published;
+                let platformLatestVersionDate: number;
+                if (typeof data.published === 'string') {
+                    if (isDateString(data.published)) platformLatestVersionDate = Date.parse(data.published);
+                    else if (isUnixString(data.published)) platformLatestVersionDate = Number(data.published);
+                    else throw new Error(`Unknown date time string format received from ${name}`);
+                }
+                else {
+                    platformLatestVersionDate = data.published;
+                }
+                typeof data.published === 'string' ? Date.parse(data.published) : data.published
                 lodash.set(res, `endpoints.${name}.version`, platformLatestVersionName);
                 lodash.set(res, `endpoints.${name}.published`, (platformLatestVersionDate || '0'));
                 if (platformLatestVersionDate > latestVersionDate) {
@@ -274,11 +284,27 @@ export async function name(ids: Partial<PackagedMarkets>) {
         })
 }
 
-get({ spigot: 92672, craftaro: 622, github: "WiIIiam278/HuskTowns" })
-    .then(async (res) => {
-        console.log(res)
-    })
+const isDateString = (string: string) => {
+    if (string.match(/^(?:(\d{4})(?:-(\d{2}))?(?:-(\d{2}))?)?(?:T(\d{2}:\d{2})(?::(\d{2}))?(?:.(\d{3})|Z)?(?:(?:[+-])(\d{2}:\d{2}))?)?$/)) {
+        console.log('true')
+        return true;
+    }
+    else {
+        console.log('false')
+        return false;
+    }
+}
 
+const isUnixString = (string: string) => {
+    if (string.match(/^(\d{6,13})$/)) {
+        console.log('true');
+        return true;
+    }
+    else {
+        console.log('false');
+        return false;
+    }
+}
 
 export default {
     get,
