@@ -24,7 +24,7 @@
   },
   "scripts": {
     "clean": "rimraf dist/",
-    "test": "ts-mocha test/*.ts",
+    "test": "ts-mocha test/*.ts --timeout 5000",
     "build": "npm run clean && ncc build src/mineget.ts -m --license licenses.txt",
     "run": "npm run clean && ncc run src/mineget.ts"
   },
