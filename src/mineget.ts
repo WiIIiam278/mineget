@@ -129,6 +129,10 @@ export async function get(ids: Partial<PackagedMarkets>) {
         .then((res) => {
             return {
                 name: res[2].endpoints,
+                downloads: res[0].endpoints,
+                ratings: res[1].endpoints,
+                version: res[3].endpoints,
+                price: res[4].endpoints,
                 total_downloads: res[0].total_downloads,
                 average_rating: res[1].average_rating,
                 rating_count: res[1].rating_count,
@@ -206,8 +210,8 @@ export async function rating(ids: Partial<PackagedMarkets>) {
             let totalRating = 0;
             let totalRatingCount = 0;
             for (const [name, data] of Object.entries(res.endpoints)) {
-                if (typeof data.average !== 'number') data.average = -1;
-                if (typeof data.count !== 'number') data.count = -1;
+                if (typeof data.average !== 'number') data.average = 0;
+                if (typeof data.count !== 'number') data.count = 0;
                 let platformAverage = parseFloat(data.average.toString());
                 let platformCount = lodash.parseInt(data.count.toString());
                 lodash.set(res, `endpoints.${name}.average`, platformAverage);
@@ -236,7 +240,16 @@ export async function latest_version(ids: Partial<PackagedMarkets>) {
             let latestVersionDate = 0;
             for (const [name, data] of Object.entries(res.endpoints)) {
                 let platformLatestVersionName = data.version;
-                let platformLatestVersionDate = typeof data.published === 'string' ? lodash.parseInt(data.published) : data.published;
+                let platformLatestVersionDate: number;
+                if (typeof data.published === 'string') {
+                    if (isDateString(data.published)) platformLatestVersionDate = Date.parse(data.published);
+                    else if (isUnixString(data.published)) platformLatestVersionDate = Number(data.published);
+                    else throw new Error(`Unknown date time string format received from ${name}`);
+                }
+                else {
+                    platformLatestVersionDate = data.published;
+                }
+                typeof data.published === 'string' ? Date.parse(data.published) : data.published
                 lodash.set(res, `endpoints.${name}.version`, platformLatestVersionName);
                 lodash.set(res, `endpoints.${name}.published`, (platformLatestVersionDate || '0'));
                 if (platformLatestVersionDate > latestVersionDate) {
@@ -268,6 +281,24 @@ export async function name(ids: Partial<PackagedMarkets>) {
         .catch((err) => {
             return Promise.reject(err);
         })
+}
+
+const isDateString = (string: string) => {
+    if (string.match(/^(?:(\d{4})(?:-(\d{2}))?(?:-(\d{2}))?)?(?:T(\d{2}:\d{2})(?::(\d{2}))?(?:.(\d{3})|Z)?(?:(?:[+-])(\d{2}:\d{2}))?)?$/)) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+const isUnixString = (string: string) => {
+    if (string.match(/^(\d{6,13})$/)) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 export default {
