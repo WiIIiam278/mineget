@@ -1,6 +1,5 @@
-import { join } from "path";
 import { fetchBuilder, MemoryCache } from "node-fetch-cache";
-import lodash, { last } from "lodash";
+import lodash from "lodash";
 
 type Endpoints = "downloads" | "rating" | "price" | "latest_version" | "name";
 type PackagedMarkets = {
@@ -63,7 +62,6 @@ async function query<T extends Endpoints & string>(ids: Partial<PackagedMarkets>
         status: 'success',
         endpoints: {}
     }
-    const objectSize = Object.entries(ids).length;
     for (const [platform, id] of Object.entries(ids)) {
         if (!platform || !id) {
             continue;
@@ -83,10 +81,7 @@ async function query<T extends Endpoints & string>(ids: Partial<PackagedMarkets>
         if (!file?.endpoints) {
             return Promise.reject(new ReferenceError(`No endpoints for ${platform}`));
         }
-        if ((!file?.endpoints[endpoint]) && objectSize === 1) {
-            return Promise.reject(new ReferenceError(`No endpoint called ${endpoint} for ${platform}`))
-        }
-        if ((!file?.endpoints[endpoint]) && objectSize > 1) {
+        if ((!file?.endpoints[endpoint])) {
             continue;
         }
 
