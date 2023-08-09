@@ -1,6 +1,5 @@
-import { join } from "path";
 import { fetchBuilder, MemoryCache } from "node-fetch-cache";
-import lodash, { last } from "lodash";
+import lodash from "lodash";
 
 type Endpoints = "downloads" | "rating" | "price" | "latest_version" | "name";
 type PackagedMarkets = {
