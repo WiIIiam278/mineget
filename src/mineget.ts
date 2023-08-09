@@ -129,6 +129,10 @@ export async function get(ids: Partial<PackagedMarkets>) {
         .then((res) => {
             return {
                 name: res[2].endpoints,
+                downloads: res[0].endpoints,
+                ratings: res[1].endpoints,
+                version: res[3].endpoints,
+                price: res[4].endpoints,
                 total_downloads: res[0].total_downloads,
                 average_rating: res[1].average_rating,
                 rating_count: res[1].rating_count,
@@ -206,8 +210,8 @@ export async function rating(ids: Partial<PackagedMarkets>) {
             let totalRating = 0;
             let totalRatingCount = 0;
             for (const [name, data] of Object.entries(res.endpoints)) {
-                if (typeof data.average !== 'number') data.average = -1;
-                if (typeof data.count !== 'number') data.count = -1;
+                if (typeof data.average !== 'number') data.average = 0;
+                if (typeof data.count !== 'number') data.count = 0;
                 let platformAverage = parseFloat(data.average.toString());
                 let platformCount = lodash.parseInt(data.count.toString());
                 lodash.set(res, `endpoints.${name}.average`, platformAverage);
