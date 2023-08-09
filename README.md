@@ -49,9 +49,10 @@ This example will return a json object with following, note that as craftaro doe
 ## Methods
 * `#downloads(ids)` - Get the total downloads of a resource across multiple marketplaces.
 * `#rating(ids)` - Get the average rating and number of ratings of a resource across multiple marketplaces.
-* `#price(ids)` - Get the lowest price and lowest price currency of a resource across multiple marketplaces.
+* `#price(ids)` - Get the lowest price and lowest price currency of a resource across multiple marketplaces. 
 * `#latest_version(ids)` - Get the latest version name and published timestamp of a resource across multiple marketplaces.
 * `#name(ids)` - Get the name of a resource as it is listed on different marketplaces.
+* `#get(ids)` - Returns all available content from the above methods, and the aggregated data points available from each.
 
 ## Supported Marketplaces
 You can query the following marketplaces with this module. Note that not all marketplaces support returning data for every query.
