@@ -82,10 +82,7 @@ async function query<T extends Endpoints & string>(ids: Partial<PackagedMarkets>
         if (!file?.endpoints) {
             return Promise.reject(new ReferenceError(`No endpoints for ${platform}`));
         }
-        if ((!file?.endpoints[endpoint]) && objectSize === 1) {
-            return Promise.reject(new ReferenceError(`No endpoint called ${endpoint} for ${platform}`))
-        }
-        if ((!file?.endpoints[endpoint]) && objectSize > 1) {
+        if ((!file?.endpoints[endpoint])) {
             continue;
         }
 
