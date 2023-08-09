@@ -62,7 +62,6 @@ async function query<T extends Endpoints & string>(ids: Partial<PackagedMarkets>
         status: 'success',
         endpoints: {}
     }
-    const objectSize = Object.entries(ids).length;
     for (const [platform, id] of Object.entries(ids)) {
         if (!platform || !id) {
             continue;
