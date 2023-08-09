@@ -236,7 +236,6 @@ export async function rating(ids: Partial<PackagedMarkets>) {
 export async function latest_version(ids: Partial<PackagedMarkets>) {
     return query(ids, 'latest_version')
         .then((res) => {
-            console.log(res)
             let latestVersionName = '';
             let latestVersionDate = 0;
             for (const [name, data] of Object.entries(res.endpoints)) {
