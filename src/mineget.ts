@@ -8,6 +8,7 @@ type PackagedMarkets = {
     craftaro: number,
     polymart: number,
     modrinth: string,
+    hangar: string
 }
 
 type EndpointResponse<T> = {

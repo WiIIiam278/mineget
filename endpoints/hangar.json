@@ -1,0 +1,17 @@
+{
+    "url": "https://hangar.papermc.io/api/v1/",
+    "endpoints": {
+        "name": {
+            "endpoint": "projects/{id}",
+            "returns": {
+                "name": "name"
+            }
+        },
+        "downloads": {
+            "endpoint": "projects/{id}",
+            "returns": {
+                "downloads": "stats.downloads"
+            }
+        }
+    }
+}
