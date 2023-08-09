@@ -240,7 +240,7 @@ export async function latest_version(ids: Partial<PackagedMarkets>) {
             let latestVersionDate = 0;
             for (const [name, data] of Object.entries(res.endpoints)) {
                 let platformLatestVersionName = data.version;
-                let platformLatestVersionDate = typeof data.published === 'string' ? lodash.parseInt(data.published) : data.published;
+                let platformLatestVersionDate = typeof data.published === 'string' ? Date.parse(data.published) : data.published;
                 lodash.set(res, `endpoints.${name}.version`, platformLatestVersionName);
                 lodash.set(res, `endpoints.${name}.published`, (platformLatestVersionDate || '0'));
                 if (platformLatestVersionDate > latestVersionDate) {
@@ -273,6 +273,12 @@ export async function name(ids: Partial<PackagedMarkets>) {
             return Promise.reject(err);
         })
 }
+
+get({ spigot: 92672, craftaro: 622, github: "WiIIiam278/HuskTowns" })
+    .then(async (res) => {
+        console.log(res)
+    })
+
 
 export default {
     get,
