@@ -1,4 +1,5 @@
 # mineget
+![CI](https://img.shields.io/github/actions/workflow/status/WiIIiam278/mineget/run-tests.yml?branch=master&logo=github)
 [![npm](https://img.shields.io/npm/v/mineget)](https://www.npmjs.com/package/mineget)
 [![Discord](https://img.shields.io/discord/818135932103557162?color=7289da&logo=discord)](https://discord.gg/tVYhJfyDWG)
 
