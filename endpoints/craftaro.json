@@ -19,6 +19,12 @@
                 "price": "data.price",
                 "currency": "data.currency"
             }
+        },
+        "downloads": {
+            "endpoint": "products/{id}",
+            "returns": {
+                "downloads": "data.product_files[]downloads"
+            }
         }
     }
 }

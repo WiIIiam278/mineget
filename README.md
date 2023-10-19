@@ -62,10 +62,10 @@ You can query the following marketplaces with this module. Note that not all mar
 |------------|----------------------------------------------|--------|-------------|------------------|----------|---------|
 | `spigot`   | [Spigot](https://www.spigotmc.org/) &dagger; | ✅      | ✅           | ✅                | ✅        | ✅       |
 | `polymart` | [Polymart](https://polymart.com/)            | ✅      | ✅           | ✅                | ✅        | ✅       |
-| `craftaro` | [Craftaro](https://craftaro.com/)            | ✅      | ❌           | ❌                | ❌        | ✅       |
+| `craftaro` | [Craftaro](https://craftaro.com/)            | ✅      | ✅           | ❌                | ❌        | ✅       |
 | `modrinth` | [Modrinth](https://www.modrinth.com/)        | ✅      | ✅           | ❌                | ❌        | ❌       |
 | `hangar`   | [Hangar](https://hangar.papermc.io/)         | ✅      | ✅           | ❌                | ❌        | ❌       |
-| `github`   | [Github](https://github.com/)                | ✅      | ❌           | ✅                | ❌        | ❌       |
+| `github`   | [Github](https://github.com/)                | ✅      | ✅           | ✅                | ❌        | ❌       |
 
 Modrinth, GitHub and Hangar IDs are alphanumeric and accept a string.
 

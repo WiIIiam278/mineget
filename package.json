@@ -44,7 +44,8 @@
   "license": "Apache-2.0",
   "dependencies": {
     "lodash": "^4.17.21",
-    "node-fetch-cache": "^3.0.5"
+    "node-fetch-cache": "^3.0.5",
+    "ts-mocha": "^10.0.0"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.196",

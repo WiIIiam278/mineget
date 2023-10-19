@@ -45,4 +45,13 @@ describe('Craftaro', function () {
         });
     });
 
+    describe('the #downloads() function', function () {
+        it('should return downloads as number', function () {
+            return mineget.downloads({ craftaro: resource })
+                .then((res) => {
+                    return assert.strictEqual(typeof res.endpoints.craftaro.downloads, 'number');
+                });
+        });
+    });
+
 })

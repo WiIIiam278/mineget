@@ -13,6 +13,12 @@
                 "version": "tag_name",
                 "published": "published_at"
             }
+        },
+        "downloads": {
+            "endpoint": "repos/{id}/releases",
+            "returns": {
+                "downloads": "assets[]download_count"
+            }
         }
     }
 }

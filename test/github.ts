@@ -29,4 +29,13 @@ describe('Github', function () {
         });
     });
 
+    describe('the #downloads() function', function () {
+        it('should return download as a number', function () {
+            return mineget.downloads({ github: resource })
+                .then((res) => {
+                    return assert.strictEqual(typeof res.endpoints.github.downloads, 'number');
+                });
+        });
+    });
+
 });

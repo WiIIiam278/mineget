@@ -99,7 +99,7 @@ async function query<T extends Endpoints & string>(ids: Partial<PackagedMarkets>
             .then((json) => {
                 lodash.set(response, `endpoints.${platform}`, {});
                 for (const [name, value] of Object.entries(file.endpoints[endpoint]['returns'])) {
-                    lodash.set(response, `endpoints.${platform}.${name}`, lodash.get(json, value as string));
+                    lodash.set(response, `endpoints.${platform}.${name}`, getReturnValue(json, value as string));
                 }
             })
             .catch((err) => {
@@ -107,6 +107,47 @@ async function query<T extends Endpoints & string>(ids: Partial<PackagedMarkets>
             })
     }
     return response as ObjectType<T>;
+}
+
+/**
+ * Resolve a path in a json object
+ * @param json  The json object to resolve the path in
+ * @param returnPath  The path to resolve
+ * @returns  The resolved value at the path
+ */
+function getReturnValue(json: object, returnPath: string) {
+    // If the type of json is an array, iterate through each item and get the value
+    if (Array.isArray(json)) {
+        let returnSum = 0;
+        for (const item of json) {
+            const value = getReturnValue(item, returnPath);
+            if (typeof value === 'number') {
+                returnSum += value;
+            }
+        }
+        return returnSum;
+    }
+
+    // If the path includes [], then we need to iterate through each item in the array and get the value
+    if (returnPath.includes('[]')) {
+        const splitPath = returnPath.split('[]');
+        const array = lodash.get(json, splitPath[0]);
+        if (!array) {
+            return undefined;
+        }
+
+        let returnSum = 0;
+        for (const item of array) {
+            const value = getReturnValue(item, splitPath[1]);
+            if (typeof value === 'number') {
+                returnSum += value;
+            }
+        }
+        return returnSum;
+    }
+
+    // Otherwise, get the simple value at the path
+    return lodash.get(json, returnPath);
 }
 
 /**
