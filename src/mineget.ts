@@ -5,7 +5,6 @@ type Endpoints = "downloads" | "rating" | "price" | "latest_version" | "name";
 type PackagedMarkets = {
     spigot: number,
     github: string,
-    craftaro: number,
     polymart: number,
     modrinth: string,
     hangar: string

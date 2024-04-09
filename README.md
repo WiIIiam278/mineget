@@ -14,7 +14,7 @@ import mineget from "mineget";
 
 // Getting the total downloads of a resource
 // Methods accept an object containing mappings of marketplace IDs
-mineget.downloads({ spigot: 97144, polymart: 1634, craftaro: 758 })
+mineget.downloads({ spigot: 97144, polymart: 1634 })
 .then((res) => {
   console.log(result)
 })
@@ -26,12 +26,12 @@ const mineget = require('mineget');
 
 // Getting the total downloads of a resource
 // Methods accept an object containing mappings of marketplace IDs
-mineget.downloads({spigot: 97144, polymart: 1634, craftaro: 758 })
+mineget.downloads({spigot: 97144, polymart: 1634})
 .then((res) => {
     console.log(result);
 });
 ```
-This example will return a json object with following, note that as craftaro doesn't have a 'downloads' endpoint it is omitted from results:
+This example will return a json object with following:
 ```json
 {
   "status": "success",
@@ -62,7 +62,6 @@ You can query the following marketplaces with this module. Note that not all mar
 |------------|----------------------------------------------|--------|-------------|------------------|----------|---------|
 | `spigot`   | [Spigot](https://www.spigotmc.org/) &dagger; | ✅      | ✅           | ✅                | ✅        | ✅       |
 | `polymart` | [Polymart](https://polymart.com/)            | ✅      | ✅           | ✅                | ✅        | ✅       |
-| `craftaro` | [Craftaro](https://craftaro.com/)            | ✅      | ✅           | ❌                | ❌        | ✅       |
 | `modrinth` | [Modrinth](https://www.modrinth.com/)        | ✅      | ✅           | ❌                | ❌        | ❌       |
 | `hangar`   | [Hangar](https://hangar.papermc.io/)         | ✅      | ✅           | ❌                | ❌        | ❌       |
 | `github`   | [Github](https://github.com/)                | ✅      | ✅           | ✅                | ❌        | ❌       |
